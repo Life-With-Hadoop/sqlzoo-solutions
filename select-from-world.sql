@@ -96,7 +96,6 @@ WHERE gdp > 1000000000000
 /*
 The CASE statement shown is used to substitute North America for Caribbean in the third column.
 
-Show the name and the continent - but substitute Australasia for Oceania - for countries beginning with N.
 */
 SELECT name, continent,
        CASE WHEN continent='Caribbean' THEN 'North America'
@@ -104,8 +103,17 @@ SELECT name, continent,
 FROM world
 WHERE name LIKE 'J%'
 
+/* Show the name and the continent - but substitute Australasia for Oceania - for countries beginning with N. */
+SELECT name,
+       CASE WHEN continent='Oceania' THEN '
+Australasia'
+            ELSE continent END
+  FROM world
+ WHERE name LIKE 'N%'
+
 --#12
 /*
+
 Show the name and the continent - but substitute Eurasia for Europe and Asia; substitute America - for each country in North America or South America or Caribbean.
 Show countries beginning with A or B
 */
@@ -133,3 +141,13 @@ CASE WHEN continent = 'Oceania' THEN 'Australasia'
      ELSE continent END
 FROM world
 ORDER BY name
+
+
+select name,continent,
+CASE when continent ='Oceania' then 'Australasia'
+     when continent ='Eurasia' OR name ='Turkey' then 'Europe/Asia'
+    when continent ='Caribbean' And name like 'B%' then 'North America'
+     when continent ='Caribbean' AND name not like 'B%' then 'South America'
+ else continent end
+from  world where tld IN ('.ag','.ba','.bb','.ca','.cn','.nz','.ru','.tr','.uk') order by name; 
+ 
